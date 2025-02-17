@@ -1,0 +1,13 @@
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px;
+}
+
+.loading-spinner {
+    text-align: center;
+    color: #666;
+    padding: 20px;
+    font-size: 14px;
+}

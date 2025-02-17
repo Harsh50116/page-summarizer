@@ -1,0 +1,43 @@
+/* src/components/SummaryContent/styles.css */
+.summary-container {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    min-height: 200px;
+    background-color: #f8f9fa;
+    margin-top: 10px;
+}
+
+.summary-content {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+}
+
+.summary-content strong {
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.summary-content div {
+    margin: 8px 0;
+}
+
+/* Style for bullet points */
+.summary-content div:has(• ) {
+    padding-left: 20px;
+    position: relative;
+}
+
+/* Sections spacing */
+.summary-content div:has(strong) {
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+/* Empty state */
+.summary-content:empty::before {
+    content: 'Click the button above to generate summary';
+    color: #666;
+    font-style: italic;
+}
