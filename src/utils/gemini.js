@@ -1,8 +1,9 @@
+import { API_INFO } from "./config";
 
 export const generateSummary = async (content) => {
 
-    const API_KEY = 'AIzaSyBt2VNLUignvRZGu2MRt6MwsDNg0rPxwIs';
-    const API_URL = 'https://generativelanguage.googleapis.com/v1/models/gemini-1.0-pro:generateContent';
+    const API_KEY = API_INFO.API_KEY;
+    const API_URL = API_INFO.API_URL;
 
     try {
         const prompt = `Please provide a concise summary of the following text in this format:

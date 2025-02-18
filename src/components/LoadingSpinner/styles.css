@@ -10,4 +10,11 @@
     color: #666;
     padding: 20px;
     font-size: 14px;
+    font-style: oblique;
+}
+
+.loading-icon {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
 }

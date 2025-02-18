@@ -1,0 +1,104 @@
+/* GrootTalk Component Styles */
+.groot-talk-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 600px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .groot-talk-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 16px;
+    background-color: #f9f9f9;
+  }
+  
+  .groot-talk-message {
+    max-width: 80%;
+    margin-bottom: 12px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    clear: both;
+    word-wrap: break-word;
+  }
+  
+  .groot-talk-message-user {
+    background-color: #e6f2ff;
+    color: #333;
+    align-self: flex-end;
+    margin-left: auto;
+  }
+  
+  .groot-talk-message-model {
+    background-color: #f0f0f0;
+    color: #333;
+    align-self: flex-start;
+    margin-right: auto;
+  }
+  
+  .groot-talk-input-container {
+    display: flex;
+    padding: 12px;
+    background-color: #ffffff;
+    border-top: 1px solid #e0e0e0;
+  }
+  
+  .groot-talk-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .groot-talk-input:focus {
+    border-color: #4a90e2;
+  }
+  
+  .groot-talk-send-button {
+    padding: 10px 16px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .groot-talk-send-button:hover {
+    background-color: #357abd;
+  }
+  
+  .groot-talk-send-button:disabled {
+    background-color: #a0c4e8;
+    cursor: not-allowed;
+  }
+  
+  .groot-talk-loading {
+    text-align: center;
+    color: #666;
+    padding: 10px;
+    font-style: italic;
+  }
+  
+  /* Scrollbar Styling */
+  .groot-talk-messages::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .groot-talk-messages::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  .groot-talk-messages::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+  
+  .groot-talk-messages::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
