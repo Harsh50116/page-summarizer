@@ -17,6 +17,7 @@ const App = () => {
 
     const [summary, setSummary] = useState("");
     const [loading, setLoading] = useState(false);
+    const [completeText, setCompleteText] = useState(false);
 
     const [tabValue, setTabValue] = useState('summary');
 
@@ -38,7 +39,8 @@ const App = () => {
             // Get the results from the first frame
             const pageContent = result[0].result;
 
-            console.log(pageContent);
+            // console.log(pageContent);
+            setCompleteText(pageContent);
 
             //Generate summary using Gemini
             const summaryText = await generateSummary(pageContent);
@@ -80,7 +82,7 @@ const App = () => {
 
             {tabValue == "talk" && 
             <>
-            <GrootTalk summary={summary} />
+            <GrootTalk text={completeText} />
             </>
             }
 

@@ -5,7 +5,7 @@ import { API_INFO } from '../../utils/config';
 
 import './styles.css';
 
-export const GrootTalk = ({ summary }) => {
+export const GrootTalk = ({ text }) => {
 
     const [messages, setMessages] = useState([]);
     const [inputMessage, setInputMessage] = useState('');
@@ -36,7 +36,7 @@ export const GrootTalk = ({ summary }) => {
                 history: newMessages.map(msg => ({
                     role: msg.role == 'user' ? 'user': 'model',
                     parts: [{ text: `You are an assistant helping a user understand a page summary. 
-                        The initial context is: ${summary}. 
+                        The initial context is: ${text}. 
                         Use this context to provide more detailed and contextual responses.` }]
                 }))
             });
@@ -68,9 +68,15 @@ export const GrootTalk = ({ summary }) => {
                             msg.role === 'user' 
                               ? 'groot-talk-message-user' 
                               : 'groot-talk-message-model'
-                          }`}>
-                            {msg.content}
-                        </div>
+                          }`}
+                          dangerouslySetInnerHTML={{__html: msg.role === 'model' 
+                            ? msg.content
+                                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')  // Convert ** to bold
+                                .replace(/\*(.*?)\*/g, '<em>$1</em>')             // Convert * to italic
+                                .replace(/\n/g, '<br />')                         // Convert newlines to breaks
+                            : msg.content}}
+                          />
+                        
                     ))
                 }
                 {

@@ -7,6 +7,7 @@
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     overflow: hidden;
+    margin-top: 10px;
   }
   
   .groot-talk-messages {
@@ -102,3 +103,21 @@
   .groot-talk-messages::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
+
+  .groot-talk-message-model strong {
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.groot-talk-message-model em {
+    font-style: italic;
+}
+
+.groot-talk-message-model ul {
+    margin: 8px 0;
+    padding-left: 20px;
+}
+
+.groot-talk-message-model li {
+    margin: 4px 0;
+}
