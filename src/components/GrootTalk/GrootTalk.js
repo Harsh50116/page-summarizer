@@ -1,17 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 import { API_INFO } from '../../utils/config';
+import { getPageData, updateChatHistory } from '../../utils/storage';
 
 import './styles.css';
 
-export const GrootTalk = ({ text }) => {
+export const GrootTalk = ({ text, currentUrl }) => {
 
     const [messages, setMessages] = useState([]);
     const [inputMessage, setInputMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
     const genAI = new GoogleGenerativeAI(API_INFO.API_KEY);
+
+    useEffect(() => {
+        //Load previous chat
+        const loadChatHistory = async() => {
+            const existingData = await getPageData(currentUrl);
+            if(existingData?.chatHistory) {
+                setMessages(existingData.chatHistory);
+            }
+        };
+
+        loadChatHistory();
+    }, [currentUrl]);
 
     const handleSendMessage = async() => {
 
@@ -46,8 +59,10 @@ export const GrootTalk = ({ text }) => {
             const response = await result.response.text();
 
             //update messages with AI response
-            setMessages(prev => [...prev, { role: 'model', content: response }]);
+            const updatedMessages = [...newMessages, { role: 'model', content: response }];
+            setMessages(updatedMessages);
 
+            await updateChatHistory(currentUrl, updatedMessages);
         } catch(error) {
             console.error("Error generating content: ", error);
             setMessages(prev => [

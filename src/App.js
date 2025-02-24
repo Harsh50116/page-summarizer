@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LoadingSpinner } from './components/LoadingSpinner/LoadingSpinner';
 import { SummaryButton } from './components/SummaryButton/SummaryButton';
 import { SummaryContent } from './components/SummaryContent/SummaryContent';
@@ -6,6 +6,7 @@ import { GrootTalk } from './components/GrootTalk/GrootTalk';
 
 import { getPageContent } from './utils/pageContent';
 import { generateSummary } from './utils/gemini';
+import { savePageData, getPageData, clearOldEntries } from './utils/storage';
 
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -18,12 +19,44 @@ const App = () => {
     const [summary, setSummary] = useState("");
     const [loading, setLoading] = useState(false);
     const [completeText, setCompleteText] = useState(false);
+    const [currentUrl, setCurrentUrl] = useState('')
 
     const [tabValue, setTabValue] = useState('summary');
+
+    useEffect(() => {
+        const init = async() => {
+            const [tab] = await chrome.tabs.query({
+                active: true,
+                currentWindow: true
+            });
+
+            setCurrentUrl(tab.url);
+
+            //Check for existing data
+            const existingData = await getPageData(tab.Url);
+            if(existingData) {
+                setSummary(existingData.summary);
+                setCompleteText(existingData.completeText);
+            }
+
+            await clearOldEntries();
+        };
+        init();
+    }, []);
 
     const handleSummarize = async () => {
         setLoading(true);
         try {
+
+            //Check existing data first
+            const existingData = await getPageData(currentUrl);
+            if(existingData) {
+                setSummary(existingData.summary);
+                setCompleteText(existingData.completeText);
+                setLoading(false);
+                return;
+            }
+
             //Get current tab
             const [tab] = await chrome.tabs.query({
                 active: true,
@@ -45,6 +78,8 @@ const App = () => {
             //Generate summary using Gemini
             const summaryText = await generateSummary(pageContent);
             setSummary(summaryText);
+
+            await savePageData(currentUrl, summaryText, pageContent);
 
         } catch (error) {
             setSummary('Error generating summary: ' + error.message);
@@ -82,7 +117,7 @@ const App = () => {
 
             {tabValue == "talk" && 
             <>
-            <GrootTalk text={completeText} />
+            <GrootTalk text={completeText} currentUrl={currentUrl} />
             </>
             }
 
