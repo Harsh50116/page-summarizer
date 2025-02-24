@@ -33,7 +33,9 @@ const App = () => {
             setCurrentUrl(tab.url);
 
             //Check for existing data
-            const existingData = await getPageData(tab.Url);
+            const existingData = await getPageData(tab.url);
+            console.log(existingData);
+            console.log(tab);
             if(existingData) {
                 setSummary(existingData.summary);
                 setCompleteText(existingData.completeText);
@@ -47,15 +49,6 @@ const App = () => {
     const handleSummarize = async () => {
         setLoading(true);
         try {
-
-            //Check existing data first
-            const existingData = await getPageData(currentUrl);
-            if(existingData) {
-                setSummary(existingData.summary);
-                setCompleteText(existingData.completeText);
-                setLoading(false);
-                return;
-            }
 
             //Get current tab
             const [tab] = await chrome.tabs.query({
